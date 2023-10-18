@@ -1,7 +1,7 @@
 import React from 'react';
-
+import Main from '../components/section/Main';
 function Today() {
-  return <div>Today</div>;
+    return <Main>Today</Main>;
 }
 
 export default Today;

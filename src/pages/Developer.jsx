@@ -1,7 +1,7 @@
 import React from 'react';
-
+import Main from '../components/section/Main';
 function Developer() {
-  return <div>Developer</div>;
+    return <Main>Developer</Main>;
 }
 
 export default Developer;

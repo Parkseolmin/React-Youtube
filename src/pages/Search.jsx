@@ -1,7 +1,7 @@
 import React from 'react';
-
+import Main from '../components/section/Main';
 function Search() {
-  return <div>Search</div>;
+    return <Main>Search</Main>;
 }
 
 export default Search;
