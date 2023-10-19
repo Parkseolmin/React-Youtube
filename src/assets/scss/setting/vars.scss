@@ -1,39 +1,47 @@
 :root {
-  --mainfont-nanum: 'nanumSquareNeo';
-  --mainfont-nexon: 'nexonLv1';
+    --mainfont-nanum: 'nanumSquareNeo';
+    --mainfont-nexon: 'nexonLv1';
 
-  //   color
-  --black: #000;
-  --black100: #333333;
-  --black200: #4b4b4b;
-  --black300: #000;
-  --black400: #000;
-  --black500: #000;
+    --black: #000;
+    --black100: #161616;
+    --black200: #222;
+    --black300: #333;
+    --black400: #444;
+    --black500: #555;
+    --black600: #666;
 
-  --white: #fff;
-  --white100: #fff;
-  --white200: #fff;
-  --white300: #fff;
-  --white400: #fff;
-  --white500: #fff;
+    --blackAlpha: #00000000;
+    --blackAlpha100: #00000025;
+    --blackAlpha200: #0000004d;
+    --blackAlpha300: #00000091;
+    --blackAlpha400: #000000c3;
+    --blackAlpha500: #000000eb;
 
-  --red: #ff0f17;
+    --white: #fff;
+    --white100: #efefef;
+    --white200: #d9d9d9;
+    --white300: #fff;
+    --white400: #fff;
+    --white500: #fff;
 
-  //   폰트
-  font-family: var(--mainfont-nanum), var(--mainfont-nexon);
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 400;
+    --red: #f00;
+    --red100: rgba(255, 0, 0, 0.441);
 
-  //   폰트 최적화
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+    // 폰트 셋팅
+    font-family: var(--mainfont-nanum), var(--mainfont-nexon);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
 
-  @media (max-width: 800px) {
-    font-size: 14px;
-    line-height: 1.4;
-  }
+    // 폰트 최적화
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    @media (max-width: 800px) {
+        font-size: 14px;
+        line-height: 1.4;
+    }
 }
