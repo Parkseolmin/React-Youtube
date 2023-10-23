@@ -1,53 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import Main from '../components/section/Main';
 import { useParams } from 'react-router-dom';
+import Main from '../components/section/Main';
+
 import VideoSearch from '../components/videos/VideoSearch';
+import { fetchFromAPI } from '../utils/api';
 
 function Search() {
     const { searchId } = useParams();
     const [videos, setVideos] = useState([]);
     const [error, setError] = useState(null);
-
-    // REACT_APP_API_KEY 환경 변수를 apiKey에 할당
-    const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+    const [nextPageToken, setNextPageToken] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // API 키가 설정되지 않은 경우 에러 처리
-        if (!apiKey) {
-            setError('YouTube API key가 설정되지 않았습니다.');
-            return;
+        setVideos([]);
+        fetchVideos(searchId);
+        setLoading(true);
+    }, [searchId]);
+
+    const fetchVideos = async (query, pageToken = '') => {
+        try {
+            const data = await fetchFromAPI(
+                `search?part=snippet&q=${query}&pageToken=${pageToken}`
+            );
+            setNextPageToken(data.nextPageToken);
+            setVideos((prevVideos) => [...prevVideos, ...data.items]);
+            setLoading(false);
+        } catch (error) {
+            setError('데이터를 불러오는 중에 오류가 발생했습니다.');
+            console.error(error);
+            setLoading(false);
         }
+    };
 
-        // API 요청 함수를 async/await를 이용해 개선
-        const fetchData = async () => {
-            try {
-                const response = await fetch(
-                    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=49&q=${searchId}&type=video&key=${apiKey}`
-                );
+    const handleLoadMore = () => {
+        if (nextPageToken) {
+            fetchVideos(searchId, nextPageToken);
+        }
+    };
 
-                if (!response.ok) {
-                    throw new Error('API 요청에 실패했습니다.');
-                }
-
-                const result = await response.json();
-                setVideos(result.items);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-
-        fetchData();
-    }, [searchId, apiKey]);
+    const searchPageClass = loading ? 'isLoading' : 'isLoaded';
 
     return (
         <Main title='유투브 검색' description='유튜브 검색 결과 페이지입니다.'>
-            <section>
+            <section id='searchPage' className={searchPageClass}>
                 <div className='video__inner search'>
                     {/* 에러 메시지 표시 */}
                     {error ? (
                         <div className='error-message'>{error}</div>
                     ) : (
                         <VideoSearch videos={videos} />
+                    )}
+                </div>
+                <div className='video__more'>
+                    {nextPageToken && (
+                        <button onClick={handleLoadMore}>더보기</button>
                     )}
                 </div>
             </section>
