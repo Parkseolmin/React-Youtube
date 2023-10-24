@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Main from '../components/section/Main';
 
 import VideoSearch from '../components/videos/VideoSearch';
-import { fetchFromAPI } from '../utils/api';
+import { fetchFromAPI } from '../utils/RapidAPI';
 
 function Search() {
     const { searchId } = useParams();
@@ -21,7 +21,9 @@ function Search() {
     const fetchVideos = async (query, pageToken = '') => {
         try {
             const data = await fetchFromAPI(
-                `search?part=snippet&q=${query}&pageToken=${pageToken}`
+                `search?part=snippet&q=${query}${
+                    pageToken ? `&pageToken=${pageToken}` : ''
+                }`
             );
             setNextPageToken(data.nextPageToken);
             setVideos((prevVideos) => [...prevVideos, ...data.items]);

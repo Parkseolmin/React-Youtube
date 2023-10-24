@@ -30,7 +30,14 @@ function Menu() {
                             location.pathname === keyword.src ? 'active' : ''
                         }
                     >
-                        <Link to={keyword.src}>{keyword.title}</Link>
+                        <Link
+                            to={keyword.src}
+                            onClick={() => {
+                                window.scrollTo(0, 0);
+                            }}
+                        >
+                            {keyword.title}
+                        </Link>
                     </li>
                 ))}
             </ul>

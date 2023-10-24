@@ -61,48 +61,48 @@ export const headerMenus = [
 
 export const searchKeyword = [
     {
-        title: 'webstoryboy',
-        src: '/search/webstoryboy',
+        title: '음악',
+        src: '/search/music',
     },
     {
-        title: 'HTML',
-        src: '/search/html',
+        title: 'Shorts',
+        src: '/search/KR+shorts',
     },
     {
-        title: 'CSS',
-        src: '/search/css',
+        title: '드라마',
+        src: '/search/한국드라마',
     },
     {
-        title: 'JavaScript',
-        src: '/search/javascript',
+        title: 'Movies',
+        src: '/search/개봉영화',
     },
     {
-        title: 'React.js',
-        src: '/search/react.js',
+        title: 'React',
+        src: '/search/react',
     },
     {
-        title: 'Vue.js',
+        title: 'Vue',
         src: '/search/vue.js',
     },
     {
         title: 'Next.js',
-        src: '/search/next.js',
+        src: '/search/next',
     },
     {
-        title: 'Node.js',
-        src: '/search/node.js',
+        title: 'Node',
+        src: '/search/node',
     },
     {
         title: 'SQL',
         src: '/search/sql',
     },
     {
-        title: 'portfolio',
-        src: '/search/React Portfolio',
+        title: '여행',
+        src: '/search/여행',
     },
     {
-        title: 'music',
-        src: '/search/NewJeans',
+        title: 'Game',
+        src: '/search/게임리뷰',
     },
 ];
 

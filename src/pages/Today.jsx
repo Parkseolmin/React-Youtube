@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Main from '../components/section/Main';
 import { Link } from 'react-router-dom';
+import { fetchPopularVideos } from '../utils/YoutubeAPI';
 
 function Today() {
     const [videos, setVideos] = useState([]);
@@ -19,16 +20,8 @@ function Today() {
         // API 요청 함수를 async/await를 이용해 개선
         const fetchData = async () => {
             try {
-                const response = await fetch(
-                    `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=25&regionCode=KR&key=${apiKey}`
-                );
-
-                if (!response.ok) {
-                    throw new Error('API 요청에 실패했습니다.');
-                }
-
-                const result = await response.json();
-                setVideos(result.items);
+                const popularVideos = await fetchPopularVideos(apiKey);
+                setVideos(popularVideos);
             } catch (err) {
                 setError(err.message);
             }

@@ -2,21 +2,39 @@ import React, { useEffect, useState } from 'react';
 import Main from '../components/section/Main';
 import { Link, useParams } from 'react-router-dom';
 
-import { fetchFromAPI } from '../utils/api';
+import { fetchFromAPI } from '../utils/RapidAPI';
 import ReactPlayer from 'react-player';
 import { CiChat1, CiStar, CiRead } from 'react-icons/ci';
+
 function Video() {
     const { videoId } = useParams();
     const [videoDetail, setVideoDetail] = useState(null);
 
     useEffect(() => {
-        fetchFromAPI(`video?part=snippet, statistics&id=${videoId}`).then(
-            (data) => {
+        fetchFromAPI(`videos?part=snippet, statistics&id=${videoId}`)
+            .then((data) => {
                 console.log(data);
                 setVideoDetail(data.items[0]);
-            }
-        );
+            })
+            .then((error) => {
+                console.error(error);
+            });
     }, [videoId]);
+
+    const formatNumber = (number) => {
+        const formatter = new Intl.NumberFormat('KR', {
+            notation: 'compact',
+            compactDisplay: 'short',
+        });
+        return formatter.format(number);
+    };
+
+    const { viewCount, likeCount, commentCount } =
+        (videoDetail && videoDetail.statistics) || {};
+    const formattedViewCount = formatNumber(viewCount);
+    const formattedLikeCount = formatNumber(likeCount);
+    const formattedCommentCount = formatNumber(commentCount);
+
     return (
         <Main
             title='유튜브 비디오 영상'
@@ -28,6 +46,7 @@ function Video() {
                         <div className='video__play'>
                             <ReactPlayer
                                 playing={true}
+                                controls={true}
                                 url={`https://www.youtube.com/watch?v=${videoId}`}
                                 width='100%'
                                 height='100%'
@@ -51,20 +70,15 @@ function Video() {
                                 <div className='count'>
                                     <span className='view'>
                                         {' '}
-                                        <CiRead />{' '}
-                                        {videoDetail.statistics.viewCount}{' '}
+                                        <CiRead /> {formattedViewCount}{' '}
                                     </span>{' '}
                                     <span className='like'>
                                         {' '}
-                                        <CiStar />{' '}
-                                        {videoDetail.statistics.likeCount}{' '}
+                                        <CiStar /> {formattedLikeCount}{' '}
                                     </span>{' '}
                                     <span className='comment'>
                                         {' '}
-                                        <CiChat1 />{' '}
-                                        {
-                                            videoDetail.statistics.commentCount
-                                        }{' '}
+                                        <CiChat1 /> {formattedCommentCount}{' '}
                                     </span>
                                 </div>
                             </div>

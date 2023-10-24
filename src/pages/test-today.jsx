@@ -1,53 +1,34 @@
-import React from 'react';
-import Main from '../components/section/Main';
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import Main from '../components/section/Main';
 
-import { todayText } from '../data/today';
-import { Link } from 'react-router-dom';
+// import VideoSearch from '../components/videos/VideoSearch';
 
-function test() {
-    return (
-        <Main title='추천 영상' description='오늘의 추천 유튜브 영상입니다.'>
-            <section id='todayPage'>
-                <h2>✨오늘의 추천 영상입니다.</h2>
+// const Search = () => {
+//     const { searchId } = useParams();
+//     const [videos, setVideos] = useState([]);
 
-                {todayText.map((today, key) => (
-                    <div className='today__inner'>
-                        <div className='today__thumb play__icon'>
-                            <Link to={todayText[0].page}>
-                                <img
-                                    src={todayText[0].img}
-                                    alt={todayText[0].title}
-                                />
-                            </Link>
-                        </div>
-                        {/* //today__thumb */}
-                        <div className='today__text'>
-                            <span className='today'>today!</span>
-                            <h3 className='title'>
-                                <Link to={todayText[0].page}>
-                                    {todayText[0].title}
-                                </Link>
-                            </h3>
-                            <p className='desc'>{todayText[0].desc}</p>
-                            <div className='info'>
-                                <span className='author'>
-                                    <Link
-                                        to={`/channel/${todayText[0].channelId}`}
-                                    >
-                                        {todayText[0].author}
-                                    </Link>
-                                </span>
-                                <span className='data'>
-                                    {todayText[0].date}
-                                </span>
-                            </div>
-                        </div>
-                        {/* //today__text */}
-                    </div>
-                ))}
-            </section>
-        </Main>
-    );
-}
+//     useEffect(() => {
+//         fetch(
+//             `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=48&q=${searchId}&type=video&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+//         )
+//             .then((response) => response.json())
+//             .then((result) => {
+//                 console.log(result);
+//                 setVideos(result.items);
+//             })
+//             .catch((error) => console.log(error));
+//     }, [searchId]);
 
-export default test;
+//     return (
+//         <Main title='유투브 검색' description='유튜브 검색 결과 페이지입니다.'>
+//             <section id='searchPage'>
+//                 <div className='video__inner search'>
+//                     <VideoSearch videos={videos} />
+//                 </div>
+//             </section>
+//         </Main>
+//     );
+// };
+
+// export default Search;
