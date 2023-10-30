@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { todayText } from '../../data/today.js';
 import { Link } from 'react-router-dom';
 import { fetchPopularVideos } from '../../utils/YoutubeAPI.js';
 
 export default function Today() {
     const [videos, setVideos] = useState([]);
-    const [error, setError] = useState(null);
 
     // REACT_APP_API_KEY 환경 변수를 apiKey에 할당
     const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
@@ -13,7 +11,7 @@ export default function Today() {
     useEffect(() => {
         // API 키가 설정되지 않은 경우 에러 처리
         if (!apiKey) {
-            setError('YouTube API key가 설정되지 않았습니다.');
+            console.error('YouTube API key가 설정되지 않았습니다.');
             return;
         }
 
@@ -22,14 +20,14 @@ export default function Today() {
             try {
                 const popularVideos = await fetchPopularVideos(apiKey);
                 setVideos(popularVideos);
+                console.log(videos[0].id);
             } catch (err) {
-                setError(err.message);
+                console.error(err.message);
             }
         };
 
         fetchData();
-    }, [apiKey]);
-    const firstItem = todayText[0];
+    }, [apiKey, videos]);
     return (
         <section id='today'>
             <div className='today__inner'>
@@ -39,9 +37,11 @@ export default function Today() {
                             src={
                                 videos.length > 0
                                     ? videos[0].snippet.thumbnails.medium.url
-                                    : firstItem.img
+                                    : ''
                             }
-                            alt={firstItem.title}
+                            alt={
+                                videos.length > 0 ? videos[0].snippet.title : ''
+                            }
                         />
                     </Link>
                 </div>
@@ -49,16 +49,44 @@ export default function Today() {
                 <div className='today__text'>
                     <span className='today'>today!</span>
                     <h3 className='title'>
-                        <Link to={firstItem.page}>{firstItem.title}</Link>
+                        <Link
+                            to={
+                                videos.length > 0
+                                    ? `/video/${videos[0].id}`
+                                    : ''
+                            }
+                        >
+                            {videos.length > 0 ? videos[0].snippet.title : ''}
+                        </Link>
                     </h3>
-                    <p className='desc'>{firstItem.desc}</p>
+                    <p className='desc'>
+                        {videos.length > 0 ? videos[0].snippet.description : ''}
+                    </p>
                     <div className='info'>
                         <span className='author'>
-                            <Link to={`/channel/${firstItem.channelId}`}>
-                                {firstItem.author}
+                            <Link
+                                to={
+                                    videos.length > 0
+                                        ? `/channel/${videos[0].snippet.channelId}`
+                                        : ''
+                                }
+                            >
+                                {videos.length > 0
+                                    ? videos[0].snippet.tags
+                                          .slice(0, 3)
+                                          .join(',  ')
+                                    : ''}
                             </Link>
                         </span>
-                        <span className='data'>{firstItem.date}</span>
+
+                        <span className='data'>
+                            {' '}
+                            {new Date(
+                                videos.length > 0
+                                    ? videos[0].snippet.publishedAt
+                                    : ''
+                            ).toDateString()}
+                        </span>
                     </div>
                 </div>
                 {/* //today__text */}

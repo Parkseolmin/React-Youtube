@@ -18,7 +18,7 @@ import {
 
 export const headerMenus = [
     {
-        title: '웹스토리보이',
+        title: 'HOME',
         icon: <CiBaseball />,
         src: '/',
     },
